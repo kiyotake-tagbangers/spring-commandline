@@ -43,10 +43,23 @@ docker image ls | grep spring-commandline
 docker run --rm \
 --name spring-commandline \
 spring-commandline:$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout) \
---command=--app.name=spring-commandline,--option=optionA
+--app.name=spring-commandline --option=optionA
 ```
 
 ## run as a task in ECS environment
+
+### push ecr
+
+```
+aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin YOUR_AWS_ACCOUNT.dkr.ecr.ap-northeast-1.amazonaws.com
+
+docker tag spring-commandline:$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout) \
+YOUR_AWS_ACCOUNT.dkr.ecr.ap-northeast-1.amazonaws.com/spring-commandline:latest
+
+docker push YOUR_AWS_ACCOUNT.dkr.ecr.ap-northeast-1.amazonaws.com/spring-commandline:latest
+```
+
+### run
 
 ```
 # クラスタの一覧
