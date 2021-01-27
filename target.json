@@ -1,0 +1,25 @@
+[
+  {
+    "Id": "1",
+    "Arn": "arn:aws:ecs:ap-northeast-1:YOUR_AWS_ACCOUNT:cluster/your-cluster-name",
+    "RoleArn": "arn:aws:iam::YOUR_AWS_ACCOUNT:role/ecsEventsRole",
+    "Input": "{\"containerOverrides\":[{\"name\":\"spring-commandline\",\"command\":[\"--app.name=spring-commandline\",\"--option=override\"]}]}",
+    "EcsParameters": {
+      "TaskDefinitionArn": "arn:aws:ecs:ap-northeast-1:YOUR_AWS_ACCOUNT:task-definition/spring-commandline",
+      "TaskCount": 1,
+      "LaunchType": "FARGATE",
+      "NetworkConfiguration": {
+        "awsvpcConfiguration": {
+          "Subnets": [
+            "subnet-aaaaaaaaaaa"
+          ],
+          "SecurityGroups": [
+            "sg-aaaaaaaaaaaaaa"
+          ],
+          "AssignPublicIp": "ENABLED"
+        }
+      },
+      "PlatformVersion": "LATEST"
+    }
+  }
+]

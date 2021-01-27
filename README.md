@@ -95,3 +95,25 @@ LOG_STREAM_NAME="ecs/spring-commandline/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 # ログをローカルにファイルとして保存
 aws logs get-log-events --log-group-name /spring-commandline --log-stream-name $LOG_STREAM_NAME --query 'events[*].message' > /tmp/$(date "+%Y%m%d-%H%M%S").log
 ```
+
+### register and run as scheduled task
+
+```
+# ルールの登録
+aws events put-rule --schedule-expression "cron(0/5 * * * ? *)" --name spring-commandline-every5-minites
+
+aws events list-rules
+
+# rule に target を登録 
+aws events put-targets --rule "spring-commandline-every5-minites" \
+--targets file://target.json
+
+aws events list-targets-by-rule --rule spring-commandline-every5-minites
+
+# 削除する場合
+aws events remove-targets --rule "spring-commandline-every5-minites" --ids 1
+
+aws events list-targets-by-rule --rule "spring-commandline-every5-minites"
+
+aws events delete-rule --name "spring-commandline-every5-minites"
+```
