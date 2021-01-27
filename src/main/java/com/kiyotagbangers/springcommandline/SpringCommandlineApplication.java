@@ -26,5 +26,7 @@ public class SpringCommandlineApplication implements ApplicationRunner {
         args.getOptionNames().forEach(optionName -> {
             System.out.println(optionName + "=" + args.getOptionValues(optionName));
         });
+
+        System.exit(0);
     }
 }
