@@ -1,0 +1,10 @@
+{
+  "containerOverrides": [
+    {
+      "name": "spring-commandline",
+      "command": [
+        "--command=--app.name=spring-commandline",
+        "--option=optionA"
+      ]
+    }]
+}

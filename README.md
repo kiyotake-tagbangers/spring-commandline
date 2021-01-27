@@ -45,3 +45,40 @@ docker run --rm \
 spring-commandline:$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout) \
 --command=--app.name=spring-commandline,--option=optionA
 ```
+
+## run as a task in ECS environment
+
+```
+# クラスタの一覧
+aws ecs list-clusters | jq '.clusterArns[]' -r
+
+# タスク定義の登録
+aws ecs register-task-definition --cli-input-json file://./task-def.json
+
+# タスク定義の表示
+aws ecs list-task-definitions | grep spring-commandline
+
+# タスクの実行
+aws ecs run-task --cluster your-cluster-name \
+--task-definition spring-commandline \
+--count 1 \
+--launch-type FARGATE \
+--network-configuration "awsvpcConfiguration={subnets=[subnet-your-subnet],securityGroups=[sg-your-security-group],assignPublicIp=DISABLED}" \
+--overrides file://./container-overrides.json
+ 
+# 実行中のタスクの一覧
+aws ecs list-tasks --cluster your-cluster-name
+
+# 終了した停止しているタスク一覧
+aws ecs list-tasks --cluster your-cluster-name --desired-status STOPPED
+
+TASK_ID="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+# ログの確認(grep はタスクID)
+aws logs describe-log-streams --log-group-name /spring-commandline | grep $TASK_ID
+
+LOG_STREAM_NAME="ecs/spring-commandline/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+# ログをローカルにファイルとして保存
+aws logs get-log-events --log-group-name /spring-commandline --log-stream-name $LOG_STREAM_NAME --query 'events[*].message' > /tmp/$(date "+%Y%m%d-%H%M%S").log
+```
