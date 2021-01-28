@@ -129,7 +129,7 @@ aws events list-targets-by-rule --rule "spring-commandline-every5-minites"
 aws events delete-rule --name "spring-commandline-every5-minites"
 ```
 
-### use parameter store
+### prepare parameter store
 
 ```
 aws ssm put-parameter --name SPRING_PROFILES_ACTIVE --value "development" --type SecureString

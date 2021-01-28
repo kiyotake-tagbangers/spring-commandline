@@ -22,7 +22,11 @@
                     "awslogs-region": "ap-northeast-1",
                     "awslogs-stream-prefix": "ecs"
                 }
-            }
+            },
+            "secrets": [{
+                "name": "SPRING_PROFILES_ACTIVE",
+                "valueFrom": "arn:aws:ssm:ap-northeast-1:YOUR_AWS_ACCOUNT:parameter/SPRING_PROFILES_ACTIVE"
+            }]
         }
     ]
 }
