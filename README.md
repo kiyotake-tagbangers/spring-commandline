@@ -21,6 +21,16 @@ app.name=[spring-commandline]
 option=[optionA]
 ```
 
+### change profiles
+
+```
+export SPRING_PROFILES_ACTIVE=development
+
+java -jar target/spring-commandline-0.0.1-SNAPSHOT.jar --app.name=spring-commandline --option=optionA
+
+./mvnw spring-boot:run -Dspring-boot.run.profiles=development -Dspring-boot.run.arguments="--app.name=spring-commandline,--option=optionA"
+```
+
 ## build image
 
 ```
@@ -42,6 +52,7 @@ docker image ls | grep spring-commandline
 ```
 docker run --rm \
 --name spring-commandline \
+-e "SPRING_PROFILES_ACTIVE=development" \
 spring-commandline:$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout) \
 --app.name=spring-commandline --option=optionA
 ```
