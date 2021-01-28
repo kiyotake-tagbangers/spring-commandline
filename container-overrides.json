@@ -5,6 +5,9 @@
       "command": [
         "--app.name=spring-commandline",
         "--option=override"
+      ],
+      "environment" : [
+        { "name" : "SPRING_PROFILES_ACTIVE", "value" : "development" }
       ]
     }]
 }

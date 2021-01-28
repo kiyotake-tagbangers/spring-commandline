@@ -22,10 +22,7 @@
                     "awslogs-region": "ap-northeast-1",
                     "awslogs-stream-prefix": "ecs"
                 }
-            },
-            "environment" : [
-                { "name" : "SPRING_PROFILES_ACTIVE", "value" : "development" }
-            ]
+            }
         }
     ]
 }
