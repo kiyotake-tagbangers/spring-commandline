@@ -128,3 +128,24 @@ aws events list-targets-by-rule --rule "spring-commandline-every5-minites"
 
 aws events delete-rule --name "spring-commandline-every5-minites"
 ```
+
+### use parameter store
+
+```
+aws ssm put-parameter --name SPRING_PROFILES_ACTIVE --value "development" --type SecureString
+```
+
+or
+
+```
+aws ssm put-parameter --cli-input-json file://parameter-store.json
+```
+
+```
+aws ssm describe-parameters | jq -r '.Parameters[].Name'
+
+aws ssm get-parameter --name SPRING_PROFILES_ACTIVE
+
+# 削除する場合
+aws ssm delete-parameter --name SPRING_PROFILES_ACTIVE
+```

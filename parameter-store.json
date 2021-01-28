@@ -1,0 +1,6 @@
+{
+  "Name": "SPRING_PROFILES_ACTIVE",
+  "Type": "SecureString",
+  "Value": "development",
+  "DataType": "text"
+}
